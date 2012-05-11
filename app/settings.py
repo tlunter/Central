@@ -2,7 +2,7 @@
 import os
 
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
-ROOT_URL = 'central'
+ROOT_URL = '/central'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -92,13 +92,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'Central.urls'
+ROOT_URLCONF = 'app.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+LOGIN_URL = os.path.join(ROOT_URL, '/social-auth/google-oauth2/')
+LOGIN_REDIRECT_URL = os.path.join(ROOT_URL)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -108,11 +111,16 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'authentication',
+    'social_auth',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # A sample logging configuration. The only tangible logging
