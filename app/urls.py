@@ -6,6 +6,8 @@ from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('',
 	url(r'', include('social_auth.urls')),
+	url(r'', include('accounts.urls')),
+    url(r'', include('static_pages.urls')),
 	
     # Examples:
     # url(r'^$', 'Central.views.home', name='home'),
