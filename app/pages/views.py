@@ -4,6 +4,6 @@ from django.template import RequestContext
 
 def index(request):
 
-    return render_to_response('static_pages/index.html',
-            {},
+    return render_to_response('pages/index.html',
+            {'title': 'Index',},
             context_instance = RequestContext(request))

@@ -1,1 +1,36 @@
+{% load full_title %}
+<html>
+	<head>
+		<title>{{ title|full_title|escape }}</title>
+		<link href="{{ STATIC_URL }}/general/css/reset.css" rel="stylesheet">
+		<link href="{{ STATIC_URL }}/general/css/main.css" rel="stylesheet">
+	</head>
+	<body>
+		<section id="container">
+			<header>
+				<span class="title">Central</span>
+				<nav>
+					<ul>
+                        {% if user.is_authenticated %}
+						<li>{{ user }} is logged in.</li>
+                        {% endif %}
+						<li><a href="{% url index-page %}">Home</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url account-profile %}">Profile</a></li>
+						<li><a href="{% url account-logout %}">Logout</a></li>
+						{% else %}
+						<li><a href="{% url account-login %}">Login</a></li>
+						{% endif %}
+					</ul>
+				</nav>
+			</header>
+			<section id="content">
+				<h1>{{ title }}</h1>
 {% block content%}{% endblock %}
+			</section>
+		</section>
+		<footer>
+			<small>Central. By Todd Lunter.</small>
+		</footer>
+	</body>
+</html>
