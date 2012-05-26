@@ -6,7 +6,7 @@ from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('',
 	url(r'', include('social_auth.urls')),
-	url(r'', include('accounts.urls')),
+	url(r'', include('auth.urls')),
     url(r'', include('pages.urls')),
     url(r'', include('channels.urls')),
 	

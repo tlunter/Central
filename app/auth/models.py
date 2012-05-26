@@ -2,7 +2,7 @@ import datetime
 import urllib
 
 from django.contrib import auth
-from django.contrib.auth.signals import user_logged_in
+from app.auth.signals import user_logged_in
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.manager import EmptyManager
@@ -11,6 +11,8 @@ from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor, sha_constructor
 from django.utils.translation import ugettext_lazy as _
 from django.utils.crypto import constant_time_compare
+from django.core.exceptions import ObjectDoesNotExist
+
 
 UNUSABLE_PASSWORD = '!' # This will never be a valid hash
 
@@ -74,7 +76,7 @@ class Permission(models.Model):
     Three basic permissions -- add, change and delete -- are automatically created for each Django model.
     """
     name = models.CharField(_('name'), max_length=50)
-    content_type = models.ForeignKey(ContentType, related_name = 'accounts_content_type')
+    content_type = models.ForeignKey(ContentType)
     codename = models.CharField(_('codename'), max_length=100)
     objects = PermissionManager()
 
@@ -225,6 +227,9 @@ class User(models.Model):
     def __unicode__(self):
         return self.username
 
+    def natural_key(self):
+        return {'username': self.username, 'email': self.email}
+
     def get_absolute_url(self):
         return "/users/%s/" % urllib.quote(smart_str(self.username))
 
@@ -283,6 +288,18 @@ class User(models.Model):
             return False
         else:
             return True
+
+    def join_channel(self, channel):
+        if channel is None:
+            raise ObjectDoesNotExist
+        
+        channel.set_active(self)
+
+    def leave_channel(self, channel):
+        if channel is None:
+            raise ObjectDoesNotExist
+        
+        channel.set_inactive(self)
 
     def get_group_permissions(self, obj=None):
         """

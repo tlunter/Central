@@ -86,7 +86,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'app.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
@@ -100,7 +100,6 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -108,7 +107,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'social_auth',
-    'accounts',
+    'auth',
     'pages',
     'channels',
     # Uncomment the next line to enable the admin:
@@ -119,10 +118,10 @@ INSTALLED_APPS = (
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
-    'app.accounts.backends.ModelBackend',
+    'app.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_USER_MODEL = 'accounts.User'
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
 
 LOGIN_URL = os.path.join(ROOT_URL, 'login/google-oauth2/')
 LOGIN_REDIRECT_URL = os.path.join(ROOT_URL)

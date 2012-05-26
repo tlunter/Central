@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor, sha_constructor
 from django.utils.crypto import constant_time_compare
-from app.accounts.models import User, Group
+from app.auth.models import User, Group
 
 def get_hexdigest(algorithm, salt, raw_password):
     """
@@ -63,11 +63,18 @@ class ChannelManager(models.Manager):
 
         return channel
 
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
 class Channel(models.Model):
     name = models.CharField(max_length=255, unique=True)
     operators = models.ManyToManyField(Group, related_name='operators', blank=True)
+    active_users = models.ManyToManyField(User, related_name='active_users', blank=True)
     password = models.CharField(max_length=128, blank=True)
     objects = ChannelManager()
+
+    def natural_key(self):
+        return self.name
 
     def set_password(self, raw_password):
         if raw_password is not None:
@@ -95,6 +102,18 @@ class Channel(models.Model):
                 self.save()
             return is_correct
         return check_password(raw_password, self.password)
+
+    def set_active(self, user):
+        if user is None:
+            raise User.DoesNotExist
+
+        self.active_users.add(user)
+
+    def set_inactive(self, user):
+        if user is None:
+            raise User.DoesNotExist
+
+        self.active_users.remove(user)
 
 class Message(models.Model):
     user = models.ForeignKey(User)
