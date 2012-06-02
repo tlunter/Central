@@ -31,7 +31,6 @@ def check_password(raw_password, enc_password):
     algo, salt, hsh = enc_password.split('$')
     return constant_time_compare(hsh, get_hexdigest(algo, salt, raw_password))
 
-
 class ChannelManager(models.Manager):
     def create_channel(self, name, password=None, operators=None):
 
@@ -40,7 +39,7 @@ class ChannelManager(models.Manager):
         channel.set_password(password)
         channel.save(using=self._db)
 
-        if isinstance(operators, str):
+        if isinstance(operators, basestring):
             try:
                 group = Group.objects.get(name=operators)
             except Group.DoesNotExist:
@@ -115,9 +114,22 @@ class Channel(models.Model):
 
         self.active_users.remove(user)
 
+class MessageManager(models.Manager):
+    def create_message(self, user, message, channel):
+        try:
+            channel_obj = Channel.objects.get(name = channel)
+        except Channel.DoesNotExist:
+            return None
+
+        message_obj = self.model(user = user, message = message, channel = channel_obj)
+        message_obj.save()
+
+        return message_obj
+
 class Message(models.Model):
     user = models.ForeignKey(User)
     time_created = models.DateTimeField(auto_now_add=True)
     time_editted = models.DateTimeField(auto_now=True)
     message = models.TextField()
     channel = models.ForeignKey(Channel)
+    objects = MessageManager()

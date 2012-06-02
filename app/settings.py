@@ -126,6 +126,11 @@ SOCIAL_AUTH_USER_MODEL = 'auth.User'
 LOGIN_URL = os.path.join(ROOT_URL, 'login/google-oauth2/')
 LOGIN_REDIRECT_URL = os.path.join(ROOT_URL)
 
+MESSAGE_LENGTH = {
+    'min': 5,
+    'max': 250,
+}
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

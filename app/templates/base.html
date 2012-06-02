@@ -12,7 +12,7 @@
 				<nav>
 					<ul>
                         {% if user.is_authenticated %}
-						<li>{{ user }} is logged in.</li>
+						<li>You are logged in as: {{ user }}</li>
                         {% endif %}
 						<li><a href="{% url index-page %}">Home</a></li>
 						{% if user.is_authenticated %}
