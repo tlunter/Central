@@ -1,4 +1,7 @@
 import os, sys
+import site
+
+site.addsitedir('/home/tlunter/Envs/Central/lib/python2.7/site-packages/')
 
 APACHE_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECTS_PATH = os.path.abspath(os.path.dirname(APACHE_PATH))

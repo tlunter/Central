@@ -1,0 +1,67 @@
+/*
+***** Style Guideline *****
+* margin, padding
+* width, height
+* top, right, bottom, left
+* font-family, font-size, color
+* background
+* border
+* display, clear, overflow, position
+* float
+* list-style
+* text-align
+* z-index
+*/
+
+div.online_users {
+    display: none;
+}
+
+div.chat {
+    width: 100%;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+div.chat table#chat_table {
+    width: 100%;
+    font-size: 12px;
+    border: 0;
+}
+
+div.chat table#chat_table tr td.user_cell {
+    width: 1px;
+}
+
+div.chat table#chat_table tr td.date_cell {
+    text-align: right;
+}
+
+div.chat table#chat_table tr td.user_cell {
+    padding-right: 5px;
+}
+
+div.chat table#chat_table tr td.date_cell {
+    font-size: 10px;
+    color: #999;
+}
+
+div.message-form {
+    width: 100%;
+    height: 25px;
+    left: 0px;
+    bottom: -1px;
+    background: #fff;
+    position: fixed;
+    clear: both;
+    text-align: center;
+}
+
+div.message-form input {
+    width: 100%;
+    max-width: 800px;
+    height: 25px;
+    border: 1px solid #ccc;
+    z-index: 100;
+}

@@ -4,6 +4,8 @@
 		<title>{{ title|full_title|escape }}</title>
 		<link href="{{ STATIC_URL }}general/css/reset.css" rel="stylesheet">
 		<link href="{{ STATIC_URL }}general/css/main.css" rel="stylesheet">
+        {% block stylesheet %}
+        {% endblock %}
 	</head>
 	<body>
 		<section id="container">

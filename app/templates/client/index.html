@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block stylesheet %}
+            <link href="{{ STATIC_URL }}client/css/main.css" rel="stylesheet">
+            <script src="{{ STATIC_URL }}general/js/jquery.js" type="text/javascript"></script>
+            <script src="{{ STATIC_URL }}client/js/main.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+                <div class="online_users">
+                </div>
+                <div class="chat">
+                    <table name="chat_table" id="chat_table">
+                    </table>
+                </div>
+                <div class="message-form">
+                    <input type="hidden" name="channel" value="{{ channel }}">
+                    <input type="text" name="message" placeholder="Message">
+                </div>
+{% endblock %}
